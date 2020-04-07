@@ -1,0 +1,288 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<p><font size="5" face="Verdana, Arial, Helvetica, sans-serif">Functions</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><b><font color="#FF0000" size="3">GIFLoadHeader</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFLoadHeader 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Initializes the 
+  GIF decoder. This function should be called <i>once</i> for each gif that is 
+  decoded, The GIF_INFO structure is prepared for using GIFDecompress.</font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">parameters</font></b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+      a GIF_INFO Structure that defines the GIF to use. The lpGIFData member of 
+      the structure should point to the raw GIF image data, the dwGIFDataSize 
+      member is the size of the data pointed to by lpGIFData </font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The function returns 
+  TRUE if successful, FALSE if it failed. The GIFVersion, dwLSWidth and dwLSHeight 
+  members of the GIF_INFO are filled by the structure.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font color="#FF0000" size="3">GIFInitalizeDecoder</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFInitalizeDecoder 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Initializes the 
+  GIF decoder. This function should be called <i>once</i> for each gif that is 
+  decoded, The GIF_INFO structure is prepared for using GIFDecompress. Always 
+  use GIFLoadHeader before GIFInitializeDecoder</font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">parameters</font></b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td bgcolor="#EEEEEE"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure that defines the GIF to use. The structure should 
+      be initialized by GIFLoadHeader</font></td>
+  </tr>
+</table>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">return 
+  values</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Returns TRUE if 
+  successful, FALSE if it failed. The following members of the GIF_INFO structure 
+  are initialized by the function:</font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="130"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpColorTable</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+      the GIF's color table (RR GG BB format)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="130"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">ColorCount</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Number of 
+      colors in the GIF image</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="130"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwImageWidth</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Width of the 
+      GIF Image</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="130"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwImageHeight</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Height of 
+      the GIF Image</font></td>
+  </tr>
+</table>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFGetColorTable</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFGetColorTable 
+  lpGifInfo:DWORD, lpBuffer:DWORD </font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Retrieves the colortable 
+  to a given buffer as an array of RGBQUAD structures. Use this function for compatibility 
+  with the windows GDI functions.</font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">parameters</font></b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure that defines the GIF to use. The structure should 
+      be initialized by GIFLoadHeader and GIFInitializeDecoder.</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpBuffer</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Points 
+      to a buffer that receives the color table as an array of RGBQUADs</font></td>
+  </tr>
+</table>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">remarks</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The size of lpBuffer 
+  can be found by multiplying the number of colors in the color table by the size 
+  of a RGBQUAD structure (=4 bytes):<br>
+  </font><i><font face="Verdana, Arial, Helvetica, sans-serif" size="2">SizeOf(lpBuffer) 
+  = GifInfo.ColorCount * 4</font></i></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function does 
+  not return a value.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFGetMinimumColorType</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFGetMinimumColorType 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Retrieves the output 
+  color type that ensures the smallest possible output format.</font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">parameters</font></b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure that defines the GIF to use. The structure should 
+      be initialized by GIFLoadHeader and GIFInitializeDecoder.</font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function returns 
+  IMAGEFORMAT_1BIT, IMAGEFORMAT_4BIT or IMAGEFORMAT_8BIT. You can use the return 
+  value as output format when decoding the GIF. GIFGetMinimumColorType ensures 
+  that this output format gives the smallest output data. You can always use a 
+  higher output format (i.e. higher nr of bits), <i>lower is not supported</i>.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFGetOutputSize</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFGetOutputSize 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">Retrieves the 
+  number of bytes to reserve for the output data.</font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure that defines the GIF to use. The structure should 
+      be initialized by GIFLoadHeader and GIFInitializeDecoder.</font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The return value 
+  indicates the number of bytes that should be allocated to fit the output data 
+  size.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFDecompress</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFDecompress 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">This is the main 
+  decompression function. It decompresses the GIF Image to the buffer pointed 
+  to by the lpImageData member of the GIF_INFO structure, in the format defined 
+  by the dwImageFormat member. </font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure that defines the GIF to use. The structure should 
+      be initialized by GIFLoadHeader and GIFInitializeDecoder.</font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The function returns 
+  TRUE if successful.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFCleanup</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFCleanup 
+  lpGifInfo:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cleans the memory 
+  that is used internally by GIFLIB. This function should be called after using 
+  the decoder.</font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer 
+      to a GIF_INFO Structure.</font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function does 
+  not return a value.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFFillBitmapInfoStruct</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFFillBitmapInfoStruct 
+  lpGifInfo:DWORD, lpBitmapInfoHeader:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">GIFFillBitmapInfoStruct 
+  fills a BITMAPINFOHEADER with the right values from a GIF_INFO Structure.</font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+        a GIF_INFO Structure.<br>
+        The dwImageWidth, dwImageHeight and dwImageFormat of this structure should 
+        have the right values. These values are set by GIFInitializeDecoder.</font></p>
+      </td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">lpBitmapInfoHeader</font></td>
+    <td height="17"> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+        a BITMAPINFOHEADER structure to be filled in.</font></p>
+    </td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function does 
+  not return a value.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFLoadResource</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFLoadResource 
+  lpGifInfo:DWORD, hInstance:DWORD, lpName:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">Loads a GIF in 
+  the form of a resource of the RT_RCDATA type, and sets the lpGIFData and dwGIFDataSize 
+  members of the GIF_INFO structure.</font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+        a GIF_INFO Structure.<br>
+        The lpGIFData and dwGIFDataSize members of the structure are set by GIFLoadResource</font></p>
+    </td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">lpBitmapInfoHeader</font></td>
+    <td height="17"> 
+      <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Identifies 
+        the module whose executable file contains the resource.</font></p>
+    </td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">lpName</font></td>
+    <td height="17"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Specifies 
+      the name of the resource or, if the high word of the parameter is NULL, 
+      a resource ID.</font></td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function does 
+  not return a value.</font></p>
+<hr>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b><font size="3" color="#FF0000">GIFLoadFile</font></b></font></p>
+<p><font size="2"><i><font face="Verdana, Arial, Helvetica, sans-serif">GIFLoadFile 
+  lpGifInfo:DWORD, lpFile:DWORD</font></i></font></p>
+<p><font size="2"><b><font face="Verdana, Arial, Helvetica, sans-serif">function</font></b></font></p>
+<p> <font face="Verdana, Arial, Helvetica, sans-serif" size="2">Loads a GIF-File 
+  from harddisk for use with the library.<br>
+  NOTE: The lpGIFData member of the GIF_INFO structure is set to a pointer to 
+  the data in the file. You should free this memory using <b>GlobalFree</b> if 
+  the data is not needed anymore.</font></p>
+<p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>parameters</b></font></p>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGifInfo</font></td>
+    <td height="17"> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+        a GIF_INFO Structure.<br>
+        The lpGIFData and dwGIFDataSize members of the structure are set by GIFLoadFile.</font></p>
+    </td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="100" height="17"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">lpFile</font></td>
+    <td height="17"> 
+      <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Points to 
+        a string that specifies the filename of the GIF to be loaded</font></p>
+    </td>
+  </tr>
+</table>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>return value</b></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This function does 
+  not return a value.</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

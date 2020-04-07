@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<p><font size="5" face="Verdana, Arial, Helvetica, sans-serif">Tutorial</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">This is a quick 
+  start guide to the library.</font></p>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 1 
+      - GIF Data</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">First of 
+        all, you will need to specify what GIF data to use. This is defined by 
+        the <b>lpGIFData</b> and <b>dwGIFDataSize</b> members of the GIF_INFO 
+        structure. Create a new GIF_INFO structure:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF">.data?<br>
+        TestGif GIF_INFO &lt;&gt;</font></p>
+      <p><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Now you will 
+        have to fill the lpGIFData and dwGIFDataSize members of this structure. 
+        Set the values manually to some pointer, use GIFLoadResource or GIFLoadFile:</font></p>
+      <p><font face="Courier New, Courier, mono" color="#009900" size="2">;manually</font><font face="Courier New, Courier, mono" color="#0000FF" size="2"><br>
+        push somepointertogifdata<br>
+        pop TestGif.lpGIFData<br>
+        push sizeofsomegifdata<br>
+        pop TestGif.dwDataSize<br>
+        <br>
+        <font color="#009900">;or with GIFLoadResource (loads GIF data from a 
+        resource)</font><br>
+        invoke GetModuleHandle, NULL<br>
+        mov hInstance, eax<br>
+        invoke GIFLoadResource, ADDR TestGif, hInstance, ID_GIFRESOURCE<br>
+        <br>
+        <font color="#009900">;or width GIFLoadFile (loads GIF data from a file)</font><br>
+        .data<br>
+        GifFilename db &quot;testimage.gif&quot;,0<br>
+        .code<br>
+        invoke GIFLoadFile, ADDR TestGif, ADDR GifFilename</font></p>
+      </td>
+  </tr>
+</table>
+<br>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 2 
+      - Load header</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Now load 
+        the GIF header width GIFLoadHeader</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF"> invoke 
+        GIFLoadHeader, ADDR TestGif</font></p>
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The GIFVersion, 
+        dwLSWidth and dwLSHeight members of TestGif are now set. This function 
+        should be called before using GIFInitializeDecoder or GIFDecompress.</font></p>
+      </td>
+  </tr>
+</table>
+<br>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 3 
+      - Initialize decoder</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Before using 
+        the decoder, you should initialize it:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF"> invoke 
+        GIFInitializeDecoder, ADDR TestGif</font></p>
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">The dwImageWidth, 
+        dwImageHeight, lpColorTable and ColorCount members of TestGif are set. 
+        This function should be called before using GIFDecompress.</font></p>
+    </td>
+  </tr>
+</table>
+<br>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 4 
+      - Set image format etc.</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">You will 
+        now need to set an image format and an output buffer. The image format 
+        (dwImageFormat) can be IMAGEFORMAT_1BIT, IMAGEFORMAT_4BIT or IMAGEFORMAT_8BIT. 
+        A higher color format than the original gif may be used, lower is not 
+        allowed (see <a href="functions.html">functions</a> for more information). 
+        You can set the color format manually or use the minimum (i.e. the one 
+        that creates the smallest output) color format by using the return value 
+        of GIFGetMinimumColorType:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#009900">;manually</font><font face="Courier New, Courier, mono" size="2" color="#0000FF"><br>
+        mov TestGif.dwImageFormat, IMAGEFORMAT_4BIT<br>
+        <br>
+        <font color="#009900">;or automatically</font><br>
+        invoke GIFGetMinimumColorType, ADDR TestGif<br>
+        mov TestGif.dwImageFormat, eax</font></p>
+      <p>If you want to create a bitmap from it, use GIFFillBitmapInfoStruct to 
+        get a valid BITMAPINFOHEADER structure. Note that if you use a function 
+        like CreateDIBitmap, the color table should immediatly follow the BITMAPINFOHEADER 
+        structure (BITMAPINFO format).</p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF"> .data?<br>
+        BitmapInfoHeader BITMAPINFOHEADER &lt;&gt;<br>
+        .code<br>
+        invoke GIFFillBitmapInfoStruct, ADDR TestGif, ADDR BitmapInfoHeader</font></p>
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Now set the 
+        lpImageData member to a valid pointer to a buffer that's big enough to 
+        store the bitmap image (If you are using CreateDIBitmap, this buffer is 
+        created by windows for you). You can get the nr of bytes needed with GIFGetOutputSize:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF">invoke 
+        GIFGetOutputSize, ADDR TestGif<br>
+        <font color="#009900">; ......<br>
+        ; create a buffer with size eax<br>
+        ; ......</font><br>
+        mov TestGif.lpImageData, {pointer to buffer}</font></p>
+      </td>
+  </tr>
+</table>
+<br>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 5 
+      - Decompress</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">GIFDecompress 
+        will decode the GIF with all the given parameters in the GIF_INFO structure:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF"> invoke 
+        GIFDecompress, ADDR TestGif<br>
+        </font></p>
+      </td>
+  </tr>
+</table>
+<br>
+<table width="90%" border="0" align="center">
+  <tr bgcolor="#DDDDDD"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Step 6- 
+      Cleanup</b></font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">As the final 
+        step, cleanup the allocated memory:</font></p>
+      <p><font face="Courier New, Courier, mono" size="2" color="#0000FF"> invoke 
+        GIFCleanup, ADDR TestGif</font></p>
+    </td>
+  </tr>
+</table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p>
+</body>
+</html>

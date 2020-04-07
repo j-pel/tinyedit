@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<p><font size="5" face="Verdana, Arial, Helvetica, sans-serif">Structures</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">In version 1.0, 
+  there's only one structure: GIF_INFO. It is used by every function in the GIFLIB. 
+  You should have one structure for each GIF you decode.</font></p>
+<p>
+<pre>
+struc TGifInfo  {
+  .GIFVersion      rb    3
+  .dwLSWidth       dd    ?
+  .dwLSHeight      dd    ?
+  .lpColorTable    dd    ?
+  .ColorCount      dd    ?
+  .dwImageWidth    dd    ?
+  .dwImageHeight   dd    ?
+  .lpImageData     dd    ?
+  .dwImageFormat   dd    ?
+  .lpGIFData       dd    ?
+  .dwGIFDataSize   dd    ?
+; INTERNAL DATA
+  .lpLZWTable      dd    ?
+  .dwLZWTableSize  dd    ?
+  .dwLZWTableCount dd    ?
+  .fGlobalCTable   db    ?
+  .dbGCTableSize   db    ?
+  .fLocalCTable    db    ?
+  .dbLCTableSize   db    ?
+  .lpGIFImage      dd    ?
+  .lpCurrentByte   dd    ?
+  .dbBitsAvailable db    ?
+  .dbCurBitSize    db    ?
+  .dbInitBitSize   db    ?
+  .lpLastEOSB      dd    ?
+  .dwLZWClear      dd    ?
+  .CurrentBits     dd    ?
+  .IsFirstCode     db    ?
+  .PixelCounter    dd    ?
+}
+</pre>
+<table border="0">
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">GIFVersion</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">These are 
+      the second 3 bytes of the file, that indicate the version number of the 
+      GIF File, like &quot;87a&quot; or &quot;89a&quot;.</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwLSWidth</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Logical screen 
+      width (see GIF format)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwLSHeight</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Logical screen 
+      height (see GIF format)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpColorTable</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Pointer to 
+      the GIF color table (RR GG BB RR GG BB format)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">ColorCount</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Number of 
+      colors in the GIF</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwImageWidth</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Actual image 
+      width (use this one to get the image dimensions)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwImageHeight</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Actual image 
+      height (use this one to get the image dimensions)</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpImageData</font></td>
+    <td> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Output buffer 
+        for decoded data (in the format specified by dwImageFormat).<br>
+        Data is outputted as windows bitmap data, in one of the following three 
+        formats: 1-bit monochrome, 4-bit 16-color or 8-bit 256 color. Scanlines 
+        are aligned to dwords (see the bitmap documentation in the win32 programmer's 
+        reference) </font></p>
+    </td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwImageFormat</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Specifies 
+      the image format (IMAGEFORMAT_XXXX constants). You can use a format that 
+      has a higher maximum number of colors than the original GIF, but lower is 
+      not supported (256 color output from a 16 color gif is allowed, 16 color 
+      output from a 256 color gif is NOT).</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">lpGIFData</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Points to 
+      the actual GIF data (in the GIF file format).</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">dwGIFDataSize</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Size of the 
+      data pointed to by lpGIFData</font></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">InternalData</font></td>
+    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data that 
+      is used internally by GIFLIB.</font></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

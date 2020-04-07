@@ -1,0 +1,10 @@
+[Project]
+ProjectName=GifTest.fpr
+
+[Files]
+MainFile=GifTest.asm
+File0000=history.txt
+File0001=MainWindow.asm
+File0002=source\giflib.asm
+File0003=source\giflib.inc
+Count=4
